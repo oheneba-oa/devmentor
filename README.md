@@ -21,3 +21,14 @@ The rules about keeping introductions short, explaining before showing code, usi
 ### 5. What happened when a rule was vague?
 
 Vague instructions produced less predictable responses. When asked "Show me an example," the three prompts interpreted the request differently.
+
+
+## Memory Investigation
+
+The memory experiment showed that DevMentor does not permanently remember previous information by itself.
+
+When the message "My favorite programming language is Python" was still stored in the conversation history, DevMentor correctly answered that my favorite language was Python.
+
+After I removed that earlier message from the `messages` list and asked the same question again, DevMentor said it did not know my favorite programming language.
+
+This shows that the apparent memory comes from the application state. The Python program stores the conversation in the `messages` list and sends that message history back to the model as context on each request. If the relevant message is removed from the history, the model no longer has access to that information.
