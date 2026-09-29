@@ -44,7 +44,15 @@ def ask_llm(question):
         # Remove the unanswered user message if the request fails.
         messages.pop()
 
-        return f"Unable to get a response from Ollama. Error: {error}"
+        error_message = str(error).lower()
+
+        if "model" in error_message and "not found" in error_message:
+            return f"Model '{MODEL}' not found. Check if it is installed in Ollama."
+
+        if "connection" in error_message or "connect" in error_message:
+            return "Unable to connect to Ollama. Make sure Ollama is running and try again."
+
+        return "Unable to get a response from Ollama. Please check your setup and try again."
 
 
 def reset_conversation():
